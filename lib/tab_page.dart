@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clon/home_page.dart';
 
 class Tabpage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class Tabpage extends StatefulWidget {
 class _TabpageState extends State<Tabpage> {
   int _selectedIndex = 0;
   List _pages = [
-    Text('Page1'),
+    HomePage(),
     Text('Page2'),
     Text('Page3'),
   ];
@@ -20,6 +21,7 @@ class _TabpageState extends State<Tabpage> {
         bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex, //current index = 현재 페이지의 index 와 같다
+        fixedColor: Colors.black,
         items: <BottomNavigationBarItem>[
            BottomNavigationBarItem(icon: Icon(Icons.home) ,title: Text('home')),
            BottomNavigationBarItem(icon: Icon(Icons.search) ,title: Text('찾기')),
