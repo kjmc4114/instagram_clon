@@ -8,9 +8,9 @@ class Tabpage extends StatefulWidget {
 class _TabpageState extends State<Tabpage> {
   int _selectedIndex = 0;
   List _pages = [
-    Text('page1'),
-    Text('page2'),
-    Text('page3'),
+    Text('Page1'),
+    Text('Page2'),
+    Text('Page3'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _TabpageState extends State<Tabpage> {
            BottomNavigationBarItem(icon: Icon(Icons.search) ,title: Text('찾기')),
            BottomNavigationBarItem(icon: Icon(Icons.account_box) ,title: Text('내정보')),
          ]
-      ),
+        ),
     );
   }
 
