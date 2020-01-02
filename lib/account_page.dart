@@ -10,6 +10,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold( //material UI
       appBar: _bulidAppBar(),
+      body:  _bulidBody(),
     );
   }
 
@@ -23,4 +24,11 @@ class _AccountPageState extends State<AccountPage> {
       ],
     );
   }
+
+ Widget  _bulidBody() {
+    return Padding(
+        padding: EdgeInsets.all(16),
+        // child:
+    );
+ }
 }
