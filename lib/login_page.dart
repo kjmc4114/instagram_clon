@@ -1,10 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:instagram_clon/tab_page.dart';
+
 
 class LoginPage extends StatelessWidget {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance; // instance라는 properties 에서 가져온다
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:Text('text LoginPage')
+    return Scaffold(
+      body: Center(
+        child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('밤편지 입니다.',style: TextStyle(fontSize: 46, fontWeight: FontWeight.bold),),
+            Padding(padding: EdgeInsets.all(50),),
+            SignInButton(
+              Buttons.Google,
+              onPressed:(){
+                _handleSignIn().then((user){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Tabpage(user)));
+                  print(user);
+                }) ; // *******비동기를 처리하는 또다른 방법
+              },
+            )
+          ],
+        )
+      ),
     );
+  }
+
+  // 로그인은 비동기로 이루어진다.
+  Future<FirebaseUser> _handleSignIn() async {
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    FirebaseUser user = (await _auth.signInWithCredential(
+      GoogleAuthProvider.getCredential(idToken: googleAuth.idToken, accessToken: googleAuth.accessToken))
+    ).user;
+
+    print("signed in " + user.displayName);
+    return user;
   }
 }
