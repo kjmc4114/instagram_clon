@@ -13,12 +13,19 @@ class Tabpage extends StatefulWidget {
 }
 
 class _TabpageState extends State<Tabpage> {
+
   int _selectedIndex = 0;
-  List _pages = [
-    HomePage(),
-    SearchPage(),
-    AccountPage(),
-  ];
+  List _pages ;
+
+@override
+  void initState() { // 생성자 다음에 수행하는것. 초기화 를 위해서 생성 타이밍이 안맞는다?
+  super.initState();
+    _pages = [
+      HomePage(widget.user),
+      SearchPage(widget.user),
+      AccountPage(widget.user),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

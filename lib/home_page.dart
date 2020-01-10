@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatelessWidget {
+  final FirebaseUser user;
+
+  HomePage(this.user); // 정보를 받기위해서 선언 후 초기화해줌.
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +40,13 @@ class HomePage extends StatelessWidget {
                               width: 80.0,
                               height: 80.0,
                               child:CircleAvatar(
-                                 backgroundImage:  NetworkImage(''),
+                                 backgroundImage:  NetworkImage(user.photoUrl),
                               )
                             ),
                             Padding(padding: EdgeInsets.fromLTRB(0,8.0,0,8.0),),
-                            Text('E-mail@adress.com' , style: TextStyle(fontWeight: FontWeight.bold) ,),
+                            Text(user.email , style: TextStyle(fontWeight: FontWeight.bold) ,),
                             Padding(padding: EdgeInsets.fromLTRB(0,4.0,0,4.0),),
-                            Text('이름') ,
+                            Text(user.displayName) ,
                             Padding(padding: EdgeInsets.all(8.0),),
 
                             Row(
