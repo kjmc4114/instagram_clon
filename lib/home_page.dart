@@ -1,11 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatelessWidget {
-  final FirebaseUser user;
-
-  HomePage(this.user); // 정보를 받기위해서 선언 후 초기화해줌.
+final FirebaseUser user;
+HomePage(this.user);
 
   @override
   Widget build(BuildContext context) {

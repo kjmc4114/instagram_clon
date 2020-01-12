@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AccountPage extends StatefulWidget {
   final FirebaseUser user;
@@ -14,6 +15,19 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  int _postCount = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Firestore.instance.collection('post').where('email', isEqualTo: widget.user.email).getDocuments()
+    .then((snapShot){
+      setState(() {
+        _postCount = snapShot.documents.length;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +41,15 @@ class _AccountPageState extends State<AccountPage> {
     return AppBar(
       actions: <Widget>[
         IconButton(
-          icon : Icon(Icons.exit_to_app),
+          icon: Icon(Icons.exit_to_app),
+          color: Colors.black,
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+            _googleSignIn.signOut();
+/*          icon : Icon(Icons.exit_to_app),
           onPressed: () { // 눌렀을때 로그아웃 처리
               FirebaseAuth.instance.signOut();
-              _googleSignIn.signOut();
+              _googleSignIn.signOut();*/
           },
         )
       ],
@@ -91,7 +110,7 @@ class _AccountPageState extends State<AccountPage> {
                 Text(widget.user.displayName , style: TextStyle(fontWeight:FontWeight.bold),),
               ],
             ),
-          Text('0 \n 게시물' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),textAlign:TextAlign.center),
+          Text('$_postCount \n 게시물' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),textAlign:TextAlign.center),
           Text('0 \n 팔로잉' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),textAlign:TextAlign.center),
           Text('0 \n 팔로워' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),textAlign:TextAlign.center),
           ],
