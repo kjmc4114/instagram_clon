@@ -3,6 +3,7 @@ import 'package:instagram_clon/account_page.dart';
 import 'package:instagram_clon/home_page.dart';
 import 'package:instagram_clon/search_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instagram_clon/wirtePage.dart';
 
 class Tabpage extends StatefulWidget {
   final FirebaseUser user;
@@ -23,6 +24,7 @@ class _TabpageState extends State<Tabpage> {
     _pages = [
       HomePage(widget.user),
       SearchPage(widget.user),
+      WriteLetter(widget.user),
       AccountPage(widget.user),
     ];
   }
@@ -32,12 +34,17 @@ class _TabpageState extends State<Tabpage> {
     return Scaffold(
         body: Center(child:_pages[_selectedIndex]),
         bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
         currentIndex: _selectedIndex, //current index = 현재 페이지의 index 와 같다
+        elevation: 3,
         fixedColor: Colors.black,
+        unselectedItemColor: Colors.blue,
+        unselectedLabelStyle: TextStyle(color: Colors.blue),
         items: <BottomNavigationBarItem>[
            BottomNavigationBarItem(icon: Icon(Icons.home) ,title: Text('home')),
            BottomNavigationBarItem(icon: Icon(Icons.search) ,title: Text('찾기')),
+           BottomNavigationBarItem(icon: Icon(Icons.email) ,title: Text('작성')),
            BottomNavigationBarItem(icon: Icon(Icons.account_box) ,title: Text('내정보')),
          ]
         ),
